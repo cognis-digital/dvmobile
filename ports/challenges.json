@@ -1,0 +1,62 @@
+[
+  {
+    "id": "idor-profile",
+    "title": "IDOR: read another user's profile",
+    "category": "authz",
+    "difficulty": "easy",
+    "masvs": "MASVS-AUTH-1",
+    "cwe": "CWE-639",
+    "hint": "The profile endpoint trusts the id in the URL and checks nothing else.",
+    "real_world_cves": [
+      "CVE-2023-32078",
+      "CVE-2022-21713",
+      "CVE-2025-64523",
+      "CVE-2026-40077"
+    ]
+  },
+  {
+    "id": "config-leak",
+    "title": "Sensitive data exposure in API config",
+    "category": "storage",
+    "difficulty": "easy",
+    "masvs": "MASVS-STORAGE-1",
+    "cwe": "CWE-798",
+    "hint": "Mobile apps often pull a bootstrap config. What does it include?",
+    "real_world_cves": [
+      "CVE-2021-43116",
+      "CVE-2021-45458",
+      "CVE-2023-32077",
+      "CVE-2022-39273"
+    ]
+  },
+  {
+    "id": "jwt-none",
+    "title": "Broken auth: accept alg=none / forged role",
+    "category": "authz",
+    "difficulty": "medium",
+    "masvs": "MASVS-AUTH-2",
+    "cwe": "CWE-347",
+    "hint": "The admin endpoint decodes the token without verifying the signature.",
+    "real_world_cves": [
+      "CVE-2015-9235",
+      "CVE-2015-10004",
+      "CVE-2023-22463",
+      "CVE-2026-48031"
+    ]
+  },
+  {
+    "id": "weak-pin",
+    "title": "Brute-forceable 4-digit transaction PIN",
+    "category": "auth",
+    "difficulty": "medium",
+    "masvs": "MASVS-AUTH-3",
+    "cwe": "CWE-307",
+    "hint": "There is no lockout. 10000 combinations is not many.",
+    "real_world_cves": [
+      "CVE-2024-21652",
+      "CVE-2024-24767",
+      "CVE-2025-60538",
+      "CVE-2026-26233"
+    ]
+  }
+]

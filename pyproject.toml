@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "dvmobile"
-version = "0.1.0"
+version = "0.2.0"
 description = "Damn Vulnerable Mobile lab — an intentionally-insecure mobile backend, documented challenges, and a flag scoreboard for training."
 readme = "README.md"
 requires-python = ">=3.10"
@@ -26,6 +26,10 @@ dvmobile = "dvmobile.cli:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["dvmobile"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"dvmobile/cognis_vulndb.jsonl.gz" = "dvmobile/cognis_vulndb.jsonl.gz"
+"dvmobile/data_feeds_2026.json" = "dvmobile/data_feeds_2026.json"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

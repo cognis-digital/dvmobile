@@ -24,6 +24,11 @@ class Challenge:
     flag: str
     writeup: str        # path under challenges/
     hint: str
+    cwe: str = ""               # primary CWE for the weakness class
+    # Real, public CVE/GHSA identifiers that demonstrate the SAME weakness class
+    # in production software. Every id here resolves in the bundled offline OSV
+    # DB (see ``dvmobile cve <id>``). Nothing is fabricated.
+    real_world_cves: tuple = ()
 
 
 CHALLENGES: list[Challenge] = [
@@ -36,6 +41,13 @@ CHALLENGES: list[Challenge] = [
         flag="DVM{idor_horizontal_priv_esc}",
         writeup="challenges/01-idor-profile.md",
         hint="The profile endpoint trusts the id in the URL and checks nothing else.",
+        cwe="CWE-639",  # Authorization Bypass Through User-Controlled Key
+        real_world_cves=(
+            "CVE-2023-32078",  # Netmaker IDOR — update another user's password
+            "CVE-2022-21713",  # Grafana API IDOR
+            "CVE-2025-64523",  # File Browser IDOR
+            "CVE-2026-40077",  # Beszel IDOR in hub API endpoints
+        ),
     ),
     Challenge(
         id="config-leak",
@@ -46,6 +58,13 @@ CHALLENGES: list[Challenge] = [
         flag="DVM{hardcoded_api_key_in_config}",
         writeup="challenges/02-config-leak.md",
         hint="Mobile apps often pull a bootstrap config. What does it include?",
+        cwe="CWE-798",  # Use of Hard-coded Credentials
+        real_world_cves=(
+            "CVE-2021-43116",  # Hard-coded credentials in Nacos
+            "CVE-2021-45458",  # Hard-coded credentials in Apache Kylin
+            "CVE-2023-32077",  # Netmaker hardcoded DNS secret key
+            "CVE-2022-39273",  # Hardcoded hashed password in flyteadmin
+        ),
     ),
     Challenge(
         id="jwt-none",
@@ -56,6 +75,13 @@ CHALLENGES: list[Challenge] = [
         flag="DVM{alg_none_admin_takeover}",
         writeup="challenges/03-jwt-none.md",
         hint="The admin endpoint decodes the token without verifying the signature.",
+        cwe="CWE-347",  # Improper Verification of Cryptographic Signature
+        real_world_cves=(
+            "CVE-2015-9235",   # jsonwebtoken verification bypass (alg confusion)
+            "CVE-2015-10004",  # robbert229/jwt token validation bypass
+            "CVE-2023-22463",  # KubePi login with a forged JWT token
+            "CVE-2026-48031",  # Hardcoded JWT secret "random" in a Go boilerplate
+        ),
     ),
     Challenge(
         id="weak-pin",
@@ -66,6 +92,13 @@ CHALLENGES: list[Challenge] = [
         flag="DVM{no_rate_limit_pin_bruteforce}",
         writeup="challenges/04-weak-pin.md",
         hint="There is no lockout. 10000 combinations is not many.",
+        cwe="CWE-307",  # Improper Restriction of Excessive Authentication Attempts
+        real_world_cves=(
+            "CVE-2024-21652",  # Bypassing rate limit / brute-force protection
+            "CVE-2024-24767",  # Password brute force in CasaOS
+            "CVE-2025-60538",  # Shiori auth bypass via brute force
+            "CVE-2026-26233",  # Mattermost — no rate limit on login
+        ),
     ),
 ]
 

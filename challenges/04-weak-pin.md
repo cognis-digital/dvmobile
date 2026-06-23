@@ -24,3 +24,23 @@ Rate-limit and lock out after a few failures, add exponential backoff, prefer
 longer secrets / device-bound keys, and require step-up auth (biometric /
 server-side OTP) for sensitive actions. Short numeric PINs need server-enforced
 attempt limits to mean anything.
+
+## Real-world CVE context (CWE-307)
+
+Missing rate limiting / lockout on authentication is a routine finding. All ids
+resolve in the bundled offline OSV DB:
+
+| CVE | Project | What broke |
+|-----|---------|------------|
+| `CVE-2024-21652` | Multiple | Bypassing rate limit & brute-force protection |
+| `CVE-2024-24767` | CasaOS | Password brute-force attack |
+| `CVE-2025-60538` | Shiori | Auth bypass via brute force |
+| `CVE-2026-26233` | Mattermost | No rate limit on login requests |
+
+```bash
+dvmobile cve CVE-2024-24767
+dvmobile enrich weak-pin
+```
+
+The lab's `/api/transfer` is the same shape: a small secret keyspace with no
+server-enforced attempt limit.

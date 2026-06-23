@@ -21,3 +21,23 @@ print(urllib.request.urlopen(req).read())   # flag in "secret"
 Reject `alg=none`. Verify the signature with a server-held key (HS256 secret or
 RS256 public key) before reading any claim. Pin the expected algorithm — never
 let the token's own header choose it.
+
+## Real-world CVE context (CWE-347)
+
+Signature-verification failures (alg confusion, `alg=none`, forged tokens) are a
+well-trodden path to auth bypass. All ids resolve in the bundled offline OSV DB:
+
+| CVE | Project | What broke |
+|-----|---------|------------|
+| `CVE-2015-9235` | `jsonwebtoken` (npm) | Verification bypass via algorithm confusion |
+| `CVE-2015-10004` | `robbert229/jwt` (Go) | Token validation methods could be bypassed |
+| `CVE-2023-22463` | KubePi | Login with a forged JWT token |
+| `CVE-2026-48031` | Go API boilerplate | Hard-coded JWT secret `"random"` → forgeable tokens |
+
+```bash
+dvmobile cve CVE-2015-9235
+dvmobile enrich jwt-none
+```
+
+The lab's `/api/admin` reproduces the worst case: the token's own header is
+trusted to pick the algorithm, and the signature is never verified.

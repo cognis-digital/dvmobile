@@ -6,3 +6,6 @@ build/
 dist/
 .venv/
 .dvmobile_score.json
+node_modules/
+ports/node/dist/
+*.tsbuildinfo

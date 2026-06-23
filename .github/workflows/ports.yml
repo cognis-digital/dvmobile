@@ -1,0 +1,45 @@
+name: ports
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  go:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: "1.21"
+      - name: build + vet + test (Go port)
+        working-directory: ports/go
+        run: |
+          go build ./...
+          go vet ./...
+          go test -v ./...
+
+  node:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: build + test (Node/TS port)
+        working-directory: ports/node
+        run: |
+          npm install --no-save typescript@5.4 @types/node@20
+          ./node_modules/.bin/tsc -p tsconfig.json
+          node --test dist/dvmobile.test.js
+
+  shell:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: lint + smoke test (shell port)
+        run: |
+          sudo apt-get update && sudo apt-get install -y shellcheck
+          shellcheck -S warning ports/shell/dvmobile.sh ports/shell/test_dvmobile.sh || true
+          sh ports/shell/test_dvmobile.sh

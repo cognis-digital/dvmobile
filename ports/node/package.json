@@ -1,0 +1,15 @@
+{
+  "name": "dvmobile-node",
+  "version": "0.2.0",
+  "private": true,
+  "description": "TypeScript/Node port of the dvmobile CLI surface (offline OSV lookups).",
+  "type": "commonjs",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "test": "tsc -p tsconfig.json && node --test dist/dvmobile.test.js"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0"
+  }
+}

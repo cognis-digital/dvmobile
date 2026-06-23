@@ -16,3 +16,23 @@ curl http://127.0.0.1:8000/api/config   # flag is the analytics_key
 Never send secrets to the client. Keep third-party keys server-side and proxy
 the calls, or use short-lived, scoped tokens minted per request. Treat the
 mobile app as fully observable by the user.
+
+## Real-world CVE context (CWE-798)
+
+Hard-coded / client-shipped secrets are a recurring, high-impact class. All ids
+resolve in the bundled offline OSV DB (`dvmobile cve <id>`):
+
+| CVE | Project | What broke |
+|-----|---------|------------|
+| `CVE-2021-43116` | Alibaba Nacos | Use of hard-coded credentials |
+| `CVE-2021-45458` | Apache Kylin | Use of hard-coded credentials |
+| `CVE-2023-32077` | Netmaker | Hard-coded DNS secret key |
+| `CVE-2022-39273` | flyteadmin | Hard-coded hashed password |
+
+```bash
+dvmobile cve CVE-2021-43116
+dvmobile enrich config-leak
+```
+
+Same root cause as the lab's `analytics_key`: a secret that lives somewhere the
+attacker can read.
