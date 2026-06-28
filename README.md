@@ -15,6 +15,72 @@ Pure standard library — **nothing to install, no Docker required.**
 > into real code — recognizing them is the point. `dvmobile` is **passive and
 > offline**: it never scans, probes, or contacts a live target.
 
+
+<!-- cognis:example:start -->
+## 🔎 Example output
+
+Real, reproducible output from the tool — runs offline:
+
+```console
+$ dvmobile --help
+usage: dvmobile [-h] [--version]
+                {challenges,serve,submit,score,cve,enrich,match,feeds} ...
+
+dvmobile CLI.
+
+positional arguments:
+  {challenges,serve,submit,score,cve,enrich,match,feeds}
+    challenges          list challenges
+    serve               run the vulnerable lab server
+    submit              submit a flag
+    score               show progress
+    cve                 look up a CVE/GHSA in the offline DB
+    enrich              real-world CVE context for challenge(s)
+    match               match components against the offline OSV DB
+    feeds               list edge/air-gap intelligence feeds
+
+options:
+  -h, --help            show this help message and exit
+  --version
+```
+
+```console
+$ dvmobile feeds
+cisa-kev                     vuln          json   CISA Known Exploited Vulnerabilities
+  epss                         vuln          json   FIRST EPSS exploit-probability scores
+  osv                          vuln          json   OSV.dev vulnerability query
+  nvd-cve                      vuln          json   NIST NVD CVE API 2.0
+  attack-enterprise            threat-intel  stix   MITRE ATT&CK Enterprise (STIX 2.1)
+  feodo-c2                     threat-intel  json   abuse.ch Feodo Tracker C2 IP blocklist
+  threatfox                    threat-intel  json   abuse.ch ThreatFox recent IOCs
+  urlhaus                      threat-intel  json   abuse.ch URLhaus recent malware URLs
+  sslbl                        threat-intel  csv    abuse.ch SSL/JA3 blacklist
+  oscal-800-53-rev5-catalog    compliance    oscal  NIST SP 800-53 rev5 catalog (OSCAL)
+  attack-nist-mappings         compliance    json   ATT&CK <-> NIST 800-53 control mappings
+  disa-stig-library            compliance    html   DISA STIG downloads (index)
+  ofac-sdn                     osint         csv    US Treasury OFAC SDN list
+  gdelt                        osint         text   GDELT 2.0 global event stream
+  opensky-states               osint         json   OpenSky Network live aircraft states
+  aws-ip-ranges                cloud         json   AWS public IP ranges
+  gcp-ip-ranges                cloud         json   Google Cloud IP ranges
+  github-advisories            vuln          json   GitHub Security Advisory DB (GHSA)
+  circl-cve                    vuln          json   CIRCL CVE / vulnerability-lookup
+  kev-mirror                   vuln          json   CISA KEV (cisagov GitHub mirror)
+  osv-pypi-bulk                vuln          zip    OSV bulk export (PyPI all)
+  spamhaus-drop                threat-intel  text   Spamhaus DROP (don't-route-or-peer)
+  tor-exit-nodes               threat-intel  text   Tor Project exit-node bulk list
+  sslbl-ja3                    threat-intel  csv    abuse.ch SSLBL JA3 fingerprint blacklist
+  urlhaus-recent               threat-intel  json   abuse.ch URLhaus recent (full)
+  attack-mobile                threat-intel  stix   MITRE ATT&CK Mobile (STIX 2.1)
+  attack-ics                   threat-intel  stix   MITRE ATT&CK ICS (STIX 2.1)
+  oscal-800-53-high            compliance    oscal  NIST 800-53 rev5 HIGH baseline (OSCAL)
+  oscal-800-53-moderate        compliance    o
+```
+
+> Blocks above are real `dvmobile` output — reproduce them from a clone.
+
+<!-- cognis:example:end -->
+
 ## What's in the box
 
 | Piece | What it does |

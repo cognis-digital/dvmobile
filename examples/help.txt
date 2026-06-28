@@ -1,0 +1,21 @@
+$ dvmobile --help
+
+usage: dvmobile [-h] [--version]
+                {challenges,serve,submit,score,cve,enrich,match,feeds} ...
+
+dvmobile CLI.
+
+positional arguments:
+  {challenges,serve,submit,score,cve,enrich,match,feeds}
+    challenges          list challenges
+    serve               run the vulnerable lab server
+    submit              submit a flag
+    score               show progress
+    cve                 look up a CVE/GHSA in the offline DB
+    enrich              real-world CVE context for challenge(s)
+    match               match components against the offline OSV DB
+    feeds               list edge/air-gap intelligence feeds
+
+options:
+  -h, --help            show this help message and exit
+  --version
